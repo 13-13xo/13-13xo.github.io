@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Games</title>
+<style>
+  :root {
+    --bg: #0f1116;
+    --card: #171a21;
+    --line: #262b36;
+    --text: #e8ecf3;
+    --muted: #9aa3b2;
+    --accent: #7fd1ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+  header h1 { font-size: 2.4rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--muted); }
+  h2 {
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin: 44px 0 14px;
+  }
+  .games {
+    display: grid; gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .game {
+    display: block; padding: 18px 20px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    text-decoration: none; color: var(--text);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .game:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .game strong { display: block; font-size: 1.05rem; }
+  .game span { color: var(--muted); font-size: 0.9rem; }
+  .empty {
+    margin-top: 14px; padding: 22px 24px;
+    border: 1px dashed var(--line); border-radius: 14px;
+    color: var(--muted); font-size: 0.95rem;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Our Games</h1>
+      <p>Made by us, for us. Pick one and play.</p>
+    </header>
+
+    <h2>Games</h2>
+
+    <!--
+      TO ADD A GAME:
+      1. Create a folder in this repository named after the game, e.g. "snake"
+      2. Put the game's main file inside it, named exactly index.html
+      3. Copy a block below, uncomment it, and change the name and description
+    -->
+
+    <div class="games">
+      <!--
+      <a class="game" href="snake/">
+        <strong>Snake</strong>
+        <span>Arrow keys. Don't hit the wall.</span>
+      </a>
+      -->
+    </div>
+
+    <div class="empty">
+      No games here yet. The first one gets added soon.
+    </div>
+  </div>
+</body>
+</html>
