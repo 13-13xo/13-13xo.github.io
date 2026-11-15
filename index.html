@@ -8,6 +8,8 @@
   :root {
     --seam: 26px;
     --ink: #080a0d;
+    --run: 3.7s;      /* weld travel time */
+    --t0: 1s;         /* when welding starts */
 
     --steel-hi:  #f6f9fc;
     --steel-lit: #d7dee6;
@@ -41,7 +43,6 @@
     overflow: hidden;
   }
 
-  /* moody vignette over everything */
   .stage::after {
     content: "";
     position: absolute; inset: 0;
@@ -62,7 +63,6 @@
     isolation: isolate;
   }
 
-  /* brushed-metal grain */
   .side::before {
     content: "";
     position: absolute; inset: 0;
@@ -76,7 +76,6 @@
     mix-blend-mode: overlay;
   }
 
-  /* specular sheen streak */
   .side::after {
     content: "";
     position: absolute; inset: -20%;
@@ -89,7 +88,6 @@
     pointer-events: none;
   }
 
-  /* ---------- HIS: brushed steel ---------- */
   .his {
     background:
       radial-gradient(110% 85% at 12% 8%, rgba(255,255,255,.92), transparent 52%),
@@ -105,7 +103,6 @@
     color: #0e1319;
   }
 
-  /* ---------- HER: cast bronze ---------- */
   .her {
     background:
       radial-gradient(110% 85% at 88% 8%, rgba(255,214,155,.85), transparent 52%),
@@ -124,23 +121,10 @@
   .content {
     position: relative;
     max-width: 30ch;
-    animation: rise .9s cubic-bezier(.2,.8,.2,1) 2.15s both;
+    animation: rise .9s cubic-bezier(.2,.8,.2,1) 4.75s both;
   }
 
   .her .content { margin-left: auto; text-align: right; }
-
-  .eyebrow {
-    display: inline-block;
-    font-size: .7rem;
-    letter-spacing: .34em;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: .42em .72em;
-    border: 1px solid currentColor;
-    border-radius: 2px;
-    opacity: .62;
-    margin-bottom: 1.1rem;
-  }
 
   h1 {
     margin: 0 0 .55rem;
@@ -176,7 +160,6 @@
 
   .games { display: grid; gap: .8rem; }
 
-  /* riveted metal plate */
   .plate {
     position: relative;
     display: block;
@@ -258,7 +241,6 @@
     animation: seamIn .3s ease-out .95s both;
   }
 
-  /* soft heat bloom behind the bead */
   .seam::before {
     content: "";
     position: absolute;
@@ -303,40 +285,75 @@
       inset 0 0 10px rgba(90,28,0,.6),
       inset 1px 0 0 rgba(255,245,220,.35),
       inset -1px 0 0 rgba(90,30,0,.45);
-    animation: beadSettle 2.2s ease-out 2.05s both;
+    animation: beadSettle 2.4s ease-out 4.5s both;
   }
 
-  /* travelling arc */
-  .arc {
+  /* ---------- TIG torch rig ---------- */
+  .rig {
     position: absolute;
     left: 50%;
-    width: 88px; height: 88px;
-    margin-left: -44px; margin-top: -44px;
+    top: 0;
+    width: 0; height: 0;
+    z-index: 7;
+    opacity: 0;
+    animation: torchRun var(--run) cubic-bezier(.32,.02,.68,.98) var(--t0) both;
+    will-change: top, opacity;
+  }
+
+  .torch {
+    position: absolute;
+    left: -60px;
+    top: -215px;
+    width: 220px;
+    height: 260px;
+    overflow: visible;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,.55));
+  }
+
+  .filler {
+    transform-box: view-box;
+    transform-origin: 172px 62px;
+    animation: dip .62s ease-in-out infinite;
+  }
+
+  .arc {
+    position: absolute;
+    left: -46px;
+    top: -46px;
+    width: 92px; height: 92px;
     border-radius: 50%;
     background: radial-gradient(circle,
       #fff 0%,
-      #fffdf2 12%,
-      #ffe6a8 24%,
-      #ffc061 38%,
-      rgba(255,120,20,.6) 55%,
+      #fffdf2 10%,
+      #ffe6a8 22%,
+      #ffc061 36%,
+      rgba(255,120,20,.55) 54%,
       transparent 72%);
-    filter: blur(.5px);
-    opacity: 0;
-    animation: arcRun 1.15s cubic-bezier(.4,0,.6,1) 1.0s both;
+    filter: blur(.6px);
+    animation: flicker .11s steps(2, end) infinite;
   }
 
-  .sparks { position: absolute; inset: 0; overflow: visible; }
+  .puddle {
+    position: absolute;
+    left: -14px; top: -6px;
+    width: 28px; height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, #fffdf0, #ffbe63 55%, rgba(255,110,10,0) 100%);
+    filter: blur(2px);
+  }
+
+  .sparks { position: absolute; left: 0; top: 0; }
 
   .spark {
     position: absolute;
-    left: 50%; top: 0;
+    left: 0; top: 0;
     width: 3px; height: 3px;
     border-radius: 50%;
     background: #fff6d2;
     box-shadow: 0 0 7px 2px rgba(255,170,60,.95);
     opacity: 0;
-    animation: sparkFly .62s ease-out both;
-    animation-delay: calc(1.0s + var(--d));
+    animation: sparkFly .55s ease-out infinite;
+    animation-delay: var(--d);
   }
 
   /* ---------- keyframes ---------- */
@@ -350,17 +367,29 @@
 
   @keyframes seamIn { from { opacity: 0; } to { opacity: 1; } }
 
+  @keyframes torchRun {
+    0%   { top: -110px;          opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { top: calc(100% + 70px); opacity: 0; }
+  }
+
+  @keyframes dip {
+    0%   { transform: rotate(0deg); }
+    42%  { transform: rotate(-4.6deg); }
+    58%  { transform: rotate(-4.6deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  @keyframes flicker {
+    0%   { opacity: .82; transform: scale(.96); }
+    100% { opacity: 1;   transform: scale(1.04); }
+  }
+
   @keyframes bloom {
     0%   { opacity: .25; filter: blur(10px); }
     30%  { opacity: 1;   filter: blur(22px); }
     100% { opacity: .55; filter: blur(18px); }
-  }
-
-  @keyframes arcRun {
-    0%   { top: 0%;   opacity: 0; }
-    8%   { opacity: 1; }
-    92%  { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
   }
 
   @keyframes sparkFly {
@@ -369,7 +398,7 @@
   }
 
   @keyframes beadSettle {
-    0%   { filter: url(#molten) brightness(2.5) saturate(1.5); }
+    0%   { filter: url(#molten) brightness(2.4) saturate(1.5); }
     100% { filter: url(#molten) brightness(1) saturate(1.12); }
   }
 
@@ -383,15 +412,14 @@
   body.done .seam,
   body.done .seam::before,
   body.done .bead,
-  body.done .arc,
-  body.done .spark,
+  body.done .rig,
   body.done .content { animation: none !important; }
 
-  body.done .arc, body.done .spark { display: none; }
+  body.done .rig { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    .side, .seam, .seam::before, .bead, .arc, .spark, .content { animation: none !important; }
-    .arc, .spark { display: none; }
+    .side, .seam, .seam::before, .bead, .rig, .content { animation: none !important; }
+    .rig { display: none; }
   }
 
   /* ---------- mobile: stack, horizontal seam ---------- */
@@ -433,32 +461,40 @@
           #e85b0c 50%, #a53402 68%, #ff9536 86%, #ffe4bd 100%);
     }
 
-    .arc { animation-name: arcRunH; }
+    /* the torch rides across instead of down */
+    .rig {
+      left: -110px;
+      top: 50%;
+      animation-name: torchRunH;
+    }
+
     .his { animation-name: slideFromTop; }
     .her { animation-name: slideFromBottom; }
   }
 
-  @keyframes arcRunH {
-    0%   { left: 0%;   opacity: 0; }
-    8%   { opacity: 1; }
-    92%  { opacity: 1; }
-    100% { left: 100%; opacity: 0; }
+  @keyframes torchRunH {
+    0%   { left: -110px;          opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { left: calc(100% + 70px); opacity: 0; }
   }
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
-  <filter id="molten">
-    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.11" numOctaves="2" seed="9" result="noise"/>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
+  <defs>
+    <filter id="molten">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 0.11" numOctaves="2" seed="9" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+  </defs>
 </svg>
 
 <main class="stage">
   <section class="side his" aria-labelledby="his-title">
     <div class="content">
-      <span class="eyebrow">Side A &middot; Steel</span>
       <h1 id="his-title">His Games</h1>
       <p class="sub">Cold-rolled, riveted, ready to fire.</p>
 
@@ -474,7 +510,6 @@
 
   <section class="side her" aria-labelledby="her-title">
     <div class="content">
-      <span class="eyebrow">Side B &middot; Bronze</span>
       <h1 id="her-title">Her Games</h1>
       <p class="sub">Cast, polished, still cooling.</p>
 
@@ -486,22 +521,104 @@
 
   <div class="seam" aria-hidden="true">
     <div class="bead"></div>
-    <div class="arc"></div>
-    <div class="sparks">
-      <i class="spark" style="--d:.05s; --x:-46px; --y:38px"></i>
-      <i class="spark" style="--d:.12s; --x:52px;  --y:26px"></i>
-      <i class="spark" style="--d:.18s; --x:-30px; --y:-34px"></i>
-      <i class="spark" style="--d:.24s; --x:38px;  --y:-42px"></i>
-      <i class="spark" style="--d:.30s; --x:-58px; --y:12px"></i>
-      <i class="spark" style="--d:.36s; --x:60px;  --y:44px"></i>
-      <i class="spark" style="--d:.42s; --x:-22px; --y:52px"></i>
-      <i class="spark" style="--d:.48s; --x:26px;  --y:-28px"></i>
-      <i class="spark" style="--d:.54s; --x:-50px; --y:-18px"></i>
-      <i class="spark" style="--d:.60s; --x:44px;  --y:16px"></i>
-      <i class="spark" style="--d:.66s; --x:-36px; --y:46px"></i>
-      <i class="spark" style="--d:.72s; --x:34px;  --y:-50px"></i>
-      <i class="spark" style="--d:.78s; --x:-64px; --y:30px"></i>
-      <i class="spark" style="--d:.84s; --x:56px;  --y:-12px"></i>
+
+    <div class="rig">
+      <div class="arc"></div>
+      <div class="puddle"></div>
+
+      <svg class="torch" viewBox="0 0 220 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cupGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#f4ece0"/>
+            <stop offset=".35" stop-color="#fffdf8"/>
+            <stop offset=".7"  stop-color="#e6dccd"/>
+            <stop offset="1"   stop-color="#c9bfae"/>
+          </linearGradient>
+          <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#8a4a1b"/>
+            <stop offset=".3"  stop-color="#d99a4e"/>
+            <stop offset=".55" stop-color="#f3c07a"/>
+            <stop offset=".8"  stop-color="#c07a34"/>
+            <stop offset="1"   stop-color="#7a3f14"/>
+          </linearGradient>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#20262d"/>
+            <stop offset=".22" stop-color="#5a6673"/>
+            <stop offset=".42" stop-color="#39424c"/>
+            <stop offset=".75" stop-color="#1b2026"/>
+            <stop offset="1"   stop-color="#0d1115"/>
+          </linearGradient>
+          <linearGradient id="handleGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#15191e"/>
+            <stop offset=".28" stop-color="#3d464f"/>
+            <stop offset=".46" stop-color="#242b33"/>
+            <stop offset=".8"  stop-color="#12161a"/>
+            <stop offset="1"   stop-color="#080a0d"/>
+          </linearGradient>
+          <linearGradient id="rodGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#8d97a2"/>
+            <stop offset=".45" stop-color="#eef3f8"/>
+            <stop offset=".7"  stop-color="#b9c2cb"/>
+            <stop offset="1"   stop-color="#6f7883"/>
+          </linearGradient>
+          <linearGradient id="hoseGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#0b0e11"/>
+            <stop offset=".4"  stop-color="#2b3239"/>
+            <stop offset=".7"  stop-color="#14181d"/>
+            <stop offset="1"   stop-color="#07090b"/>
+          </linearGradient>
+        </defs>
+
+        <!-- gas hose trailing away -->
+        <path d="M62 46 C 92 -4 152 8 208 44"
+              stroke="url(#hoseGrad)" stroke-width="12" stroke-linecap="round"/>
+        <path d="M62 46 C 92 -4 152 8 208 44"
+              stroke="#454e57" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+        <path d="M64 58 C 96 14 150 22 202 54"
+              stroke="#0a0d10" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>
+
+        <!-- handle -->
+        <rect x="40" y="44" width="42" height="74" rx="13" fill="url(#handleGrad)"/>
+        <rect x="46" y="52" width="7" height="56" rx="3.5" fill="#9aa5b0" opacity=".18"/>
+        <rect x="66" y="52" width="3" height="56" rx="1.5" fill="#000" opacity=".35"/>
+
+        <!-- barrel / torch body -->
+        <rect x="46" y="112" width="30" height="34" rx="4" fill="url(#bodyGrad)"/>
+        <rect x="49" y="116" width="4" height="26" rx="2" fill="#aab5c0" opacity=".22"/>
+
+        <!-- copper collet body -->
+        <rect x="41" y="142" width="40" height="17" rx="3" fill="url(#copperGrad)"/>
+        <rect x="41" y="146" width="40" height="2" fill="#ffe0b0" opacity=".45"/>
+
+        <!-- ceramic cup (alumina nozzle) -->
+        <path d="M35 157 L87 157 L73 212 L49 212 Z" fill="url(#cupGrad)"/>
+        <path d="M35 157 L87 157 L84 164 L38 164 Z" fill="#fff" opacity=".35"/>
+        <ellipse cx="61" cy="212" rx="12" ry="4.2" fill="#6d6355"/>
+        <ellipse cx="61" cy="212" rx="8" ry="2.6" fill="#241d16"/>
+
+        <!-- tungsten electrode -->
+        <line x1="61" y1="210" x2="61" y2="231" stroke="#cfd7e0" stroke-width="2.6" stroke-linecap="round"/>
+        <line x1="61" y1="226" x2="61" y2="231" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".85"/>
+
+        <!-- filler rod, dipping into the puddle -->
+        <g class="filler">
+          <line x1="172" y1="62" x2="86" y2="198"
+                stroke="url(#rodGrad)" stroke-width="3.6" stroke-linecap="round"/>
+          <line x1="172" y1="62" x2="150" y2="98"
+                stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+        </g>
+      </svg>
+
+      <div class="sparks">
+        <i class="spark" style="--d:0s;    --x:-46px; --y:38px"></i>
+        <i class="spark" style="--d:.07s;  --x:52px;  --y:26px"></i>
+        <i class="spark" style="--d:.14s;  --x:-30px; --y:-34px"></i>
+        <i class="spark" style="--d:.21s;  --x:38px;  --y:-42px"></i>
+        <i class="spark" style="--d:.28s;  --x:-58px; --y:12px"></i>
+        <i class="spark" style="--d:.35s;  --x:60px;  --y:44px"></i>
+        <i class="spark" style="--d:.42s;  --x:-22px; --y:52px"></i>
+        <i class="spark" style="--d:.49s;  --x:26px;  --y:-28px"></i>
+      </div>
     </div>
   </div>
 </main>
@@ -516,7 +633,7 @@
     }
     window.addEventListener('pointerdown', finish, { once: true });
     window.addEventListener('keydown', finish, { once: true });
-    setTimeout(finish, 4200);
+    setTimeout(finish, 6400);
   })();
 </script>
 
