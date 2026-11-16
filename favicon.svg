@@ -16,7 +16,7 @@
       <stop offset="1"    stop-color="#552606"/>
     </linearGradient>
 
-    <linearGradient id="bead" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="bead" gradientUnits="userSpaceOnUse" x1="32" y1="8" x2="32" y2="58">
       <stop offset="0"   stop-color="#fff2d4"/>
       <stop offset=".35" stop-color="#ffb459"/>
       <stop offset=".7"  stop-color="#f2701a"/>
@@ -26,7 +26,7 @@
     <clipPath id="leftHalf"><rect x="-2" y="0" width="34" height="64"/></clipPath>
     <clipPath id="rightHalf"><rect x="32" y="0" width="34" height="64"/></clipPath>
 
-    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <filter id="glow" filterUnits="userSpaceOnUse" x="16" y="0" width="32" height="64">
       <feGaussianBlur stdDeviation="1.7" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
@@ -57,9 +57,9 @@
 
   <!-- the fused seam -->
   <g filter="url(#glow)">
-    <path d="M32 12.4 L32 54.4" stroke="url(#bead)" stroke-width="3.4" stroke-linecap="round"/>
-    <path d="M32 12.9 L32 53.9" stroke="#fff8e8" stroke-width="1.1" stroke-linecap="round"
-          stroke-dasharray="2.2 2" opacity=".8"/>
+    <path d="M32 12.4 L32 54.4" stroke="url(#bead)" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M32 13.2 L32 53.6" stroke="#fffdf3" stroke-width="1.6" stroke-linecap="round"
+          stroke-dasharray="2.6 2.4" opacity=".9"/>
   </g>
 
   <!-- rim -->
