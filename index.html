@@ -506,32 +506,24 @@
     to   { clip-path: inset(-30% -6% -30% -6%); opacity: 1; }
   }
 
-  /* ---------- phone: both halves stacked, welded across the middle ---------- */
+  /* ---------- phone: the weld runs across the top, His then Her stacked under it ---------- */
   @media (max-width: 820px) {
     body { overflow-x: hidden; overflow-y: auto; }
 
     .stage {
       flex-direction: column;
-      padding-top: 0;
+      padding-top: 84px;                /* room for the weld strip and the title */
       height: auto;
       min-height: 100dvh;
       overflow: visible;
     }
 
-    .side { flex: none; overflow: visible; padding: 7vh 7vw 6vh; }
-    .his  { padding-bottom: 5.5rem; }
-    .her  { padding-top: 5.5rem; }
+    .side { flex: none; overflow: visible; padding: 5vh 7vw 6vh; }
 
     .duo {
-      top: var(--split, 50vh);
+      top: 42px;                        /* centred on the weld strip */
       transform: translate(-50%, -50%);
-      font-size: clamp(2.8rem, 20vw, 5rem);
-      background:
-        linear-gradient(90deg, #ffffff 0%, #b5c3d2 50%, #eef5fb 100%) 0 0 / 100% 50% no-repeat,
-        linear-gradient(90deg, #fff6e6 0%, #e7ad6b 50%, #ffe9c8 100%) 0 100% / 100% 50% no-repeat;
-      -webkit-background-clip: text;
-      background-clip: text;
-      animation-name: fuseH;
+      font-size: clamp(2.4rem, 15vw, 3.6rem);
     }
 
     .content { max-width: none; margin-block: 0; }
@@ -539,14 +531,14 @@
     h2 { font-size: clamp(1.5rem, 6.4vw, 2.1rem); }
     .plate strong { font-size: 1.65rem; }
 
-    /* the heat tint hugs the seam: down from the top of Her, up from the bottom of His */
+    /* the heat tint hugs the weld along the top of His; Her is further down and has none */
     .haz {
       top: 0; bottom: auto;
       left: 0; right: 0;
       width: auto;
       height: 74px;
     }
-    .his .haz { top: auto; bottom: 0; transform: scaleY(-1); }
+    .her .haz { display: none; }
     .his .haz, .her .haz {
       background: linear-gradient(to bottom,
         rgba(226,196,126,1) 0%,
@@ -560,7 +552,7 @@
     }
 
     .seam {
-      top: calc(var(--split, 50vh) - var(--seam) / 2); bottom: auto;
+      top: 29px; bottom: auto;
       left: 0; right: 0;
       width: auto;
       height: var(--seam);
@@ -604,7 +596,7 @@
 
     .torch { transform: rotate(180deg); }
 
-    .his { --spill: 50% 100%; animation-name: slideFromTop; }
+    .his { --spill: 50% 0%; animation-name: slideFromTop; }
     .her { --spill: 50% 0%; animation-name: slideFromBottom; }
   }
 
@@ -1237,9 +1229,6 @@
     }
 
     function rebuild() {
-      var his = document.querySelector('.side.his');
-      var stage = document.querySelector('.stage');
-      if (his && stage) stage.style.setProperty('--split', his.offsetHeight + 'px');
       buildBead();
       var all = document.querySelectorAll('.side');
       for (var i = 0; i < all.length; i++) buildWear(all[i]);
