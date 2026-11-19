@@ -4,9 +4,9 @@ Static GitHub Pages site shared by Brooke (`13-13xo`, repo owner, built the site
 
 ## Layout
 - `index.html` — the whole site (inline CSS/JS/SVG). Two halves in `<main class="stage">`:
-  - `section.side.his` — **His Games** (brushed steel)
-  - `section.side.her` — **Her Games** (warm copper)
-  - TIG welding-seam animation down the middle; on phones a His/Her toggle tab switches sides.
+  - `section.side.his` — **His Games** (dark steel, lit teal)
+  - `section.side.her` — **Her Games** (dark steel, lit amber)
+  - Stick (SMAW) welding-seam animation down the middle (steel bead, rod burns down); on phones a His/Her toggle tab switches sides.
 - `favicon.svg` — half steel, half bronze heart.
 - One folder per game, each a Godot 4.3 single-threaded web export (`index.html/.js/.wasm/.pck`, icons):
   - `shoot-the-shit/` — Brooke's version (Her Games, inline SVG card art)
