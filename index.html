@@ -7,6 +7,9 @@
 <title>Our Games</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
+  /* how hot the weld still is: 1 the moment the run ends, 0 after about 30 seconds */
+  @property --heat { syntax: '<number>'; inherits: true; initial-value: 1; }
+
   :root {
     --seam: 26px;
     --ink: #080a0d;
@@ -65,16 +68,11 @@
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     isolation: isolate;
   }
 
-  .side::-webkit-scrollbar { width: 9px; }
-  .side::-webkit-scrollbar-thumb {
-    background: rgba(20,24,28,.32);
-    border-radius: 9px;
-  }
-  .side::-webkit-scrollbar-track { background: transparent; }
+  .side::-webkit-scrollbar { display: none; }
 
   .side::before {
     content: "";
@@ -144,7 +142,7 @@
     pointer-events: none;
     filter: blur(2px);
     mix-blend-mode: color;
-    opacity: .48;
+    opacity: calc(.14 + .34 * var(--heat, 0));
   }
   .his .haz {
     right: 0;
@@ -333,6 +331,7 @@
       rgba(255,80,0,.09) 62%,
       transparent 78%);
     filter: blur(18px);
+    opacity: calc(.55 * var(--heat, 0));
     animation: bloom 2.6s ease-out 2.0s both;
   }
 
@@ -341,7 +340,7 @@
     inset: 0;
     z-index: 1;
     filter: drop-shadow(0 0 5px rgba(150,195,255,.4))
-            drop-shadow(0 0 16px rgba(255,120,30,.28));
+            drop-shadow(0 0 16px rgba(255,120,30,calc(.08 + .3 * var(--heat, 0))));
   }
 
   .bead {
@@ -349,8 +348,15 @@
     width: 100%;
     height: 100%;
     overflow: visible;
-    animation: beadSettle 2.4s ease-out calc(var(--t0) + var(--run) - .25s) both;
+    /* red-hot orange while fresh, cooling to bare steel */
+    filter: sepia(calc(.9 * var(--heat, 0))) saturate(calc(1 + 2.6 * var(--heat, 0))) brightness(calc(1 + .3 * var(--heat, 0)));
   }
+
+  .stage {
+    animation: cool 30s cubic-bezier(.25,.55,.3,1) calc(var(--t0) + var(--run)) both;
+  }
+
+  @keyframes cool { from { --heat: 1; } to { --heat: 0; } }
 
   /* ---------- TIG torch rig ---------- */
   .rig {
@@ -449,11 +455,6 @@
     100% { opacity: .55; filter: blur(18px); }
   }
 
-  @keyframes beadSettle {
-    0%   { filter: brightness(2.6) saturate(1.6); }
-    100% { filter: brightness(1) saturate(1); }
-  }
-
   @keyframes rise {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: none; }
@@ -485,6 +486,7 @@
     .side, .seam, .seam::before, .bead, .beadwrap, .haz, .rig, .content, .duo { animation: none !important; }
     .rig { display: none; }
     .beadwrap, .haz, .seam::before { -webkit-mask-image: none; mask-image: none; }
+    .stage { animation: none; --heat: 0; }
   }
 
   /* ---------- the shared title: one game, fused across the seam ---------- */
