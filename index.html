@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Brennan and Brooke each build their own take on the same games. Pick a side, or play both.">
+<meta name="description" content="I.O.I. means iron on iron. Brennan and Brooke each build their own games, and their own takes on the same ones. Pick a side, or play both.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Our Games</title>
+<title>I.O.I. | Iron on Iron</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
   :root {
@@ -376,13 +376,17 @@
     top: -46px;
     width: 92px; height: 92px;
     border-radius: 50%;
-    background: radial-gradient(circle,
-      #fff 0%,
-      #fffdf2 10%,
-      #ffe6a8 22%,
-      #ffc061 36%,
-      rgba(255,120,20,.55) 54%,
-      transparent 72%);
+    /* white core, a hint of blue at its edge, then the warm glow */
+    background:
+      radial-gradient(circle, transparent 26%, rgba(120,170,255,.28) 38%, transparent 60%),
+      radial-gradient(circle,
+        #fff 0%,
+        #f1f6ff 9%,
+        #cfe1ff 17%,
+        #ffe9b8 28%,
+        #ffc061 38%,
+        rgba(255,120,20,.5) 56%,
+        transparent 72%);
     filter: blur(.6px);
     animation: flicker .11s steps(2, end) infinite;
   }
@@ -491,7 +495,7 @@
     white-space: nowrap;
     text-align: center;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif;
-    font-size: clamp(2rem, 5.2vw, 4.4rem);
+    font-size: clamp(2.6rem, 6.4vw, 5.4rem);
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: .04em;
@@ -581,7 +585,7 @@
     .duo {
       top: var(--split, 50vh);
       transform: translate(-50%, -50%);
-      font-size: clamp(2rem, 11vw, 3.4rem);
+      font-size: clamp(2.8rem, 20vw, 5rem);
       background:
         linear-gradient(90deg, #ffffff 0%, #b5c3d2 50%, #eef5fb 100%) 0 0 / 100% 50% no-repeat,
         linear-gradient(90deg, #fff6e6 0%, #e7ad6b 50%, #ffe9c8 100%) 0 100% / 100% 50% no-repeat;
@@ -713,7 +717,7 @@
 </nav>
 
 <main class="stage">
-  <h2 class="duo">Shoot The Shit</h2>
+  <h2 class="duo" aria-label="I.O.I., iron on iron">I.O.I.</h2>
 
   <section class="side his" aria-labelledby="his-title">
     <svg class="wear" aria-hidden="true" preserveAspectRatio="none"><g class="wear-body"></g></svg>
@@ -725,7 +729,7 @@
       <div class="games">
         <a class="plate" href="his-shoot-the-shit/">
           <img class="thumb" src="his-shoot-the-shit/card.webp" alt="A shell blast tearing through a brick tower with drones inside" width="800" height="450">
-          <strong>His take</strong>
+          <strong>Shoot The Shit</strong>
           <span>24 levels, four sectors. Siege, Demolition and a tower Workshop.</span>
           <span class="size">90 MB &middot; give it a moment to load</span>
         </a>
@@ -905,7 +909,7 @@
 
             <rect width="800" height="450" fill="url(#caGlow)" opacity=".5"/>
           </svg>
-          <strong>Her take</strong>
+          <strong>Shoot The Shit</strong>
           <span>Ten missions, three sectors. Siege and demolition.</span>
           <span class="size">86 MB &middot; give it a moment to load</span>
         </a>
