@@ -175,7 +175,7 @@
 
   .her .content { margin-left: auto; text-align: right; }
 
-  h1 {
+  h2 {
     margin: 0 0 .4rem;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif;
     font-size: clamp(1.9rem, 3.1vw, 2.7rem);
@@ -185,12 +185,12 @@
     opacity: .92;
   }
 
-  .his h1 {
+  .his h2 {
     color: #eef4fa;
     text-shadow: 0 1px 0 rgba(0,0,0,.7), 0 0 22px rgba(64,200,218,.42);
   }
 
-  .her h1 {
+  .her h2 {
     color: #fff2e0;
     text-shadow: 0 1px 0 rgba(0,0,0,.7), 0 0 22px rgba(255,150,60,.42);
   }
@@ -294,15 +294,6 @@
 
   .plate .size { font-size: .74rem; opacity: .6; margin-top: .4rem; }
 
-  .empty {
-    padding: 1.15rem 1.2rem;
-    border: 1px dashed rgba(0,0,0,.42);
-    border-radius: 3px;
-    font-size: .88rem;
-    opacity: .68;
-    letter-spacing: .02em;
-  }
-
   /* ---------- weld seam ---------- */
   .seam {
     position: absolute;
@@ -333,7 +324,7 @@
   }
 
 
-  /* ---------- TIG torch rig ---------- */
+  /* ---------- stick (SMAW) welding rig ---------- */
   .rig {
     position: absolute;
     left: 50%;
@@ -428,12 +419,6 @@
     100% { opacity: 1;   transform: scale(1.04); }
   }
 
-  @keyframes bloom {
-    0%   { opacity: .25; filter: blur(10px); }
-    30%  { opacity: 1;   filter: blur(22px); }
-    100% { opacity: .55; filter: blur(18px); }
-  }
-
   @keyframes rise {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: none; }
@@ -521,53 +506,8 @@
     to   { clip-path: inset(-30% -6% -30% -6%); opacity: 1; }
   }
 
-  /* ---------- phone side toggle (shown <=820px) ---------- */
-  .toggle { display: none; }
-
   /* ---------- phone: both halves stacked, welded across the middle ---------- */
   @media (max-width: 820px) {
-    .toggle {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
-      padding: 12px 0 0;
-      pointer-events: none;
-    }
-
-    .toggle .tab {
-      pointer-events: auto;
-      appearance: none;
-      margin: 0;
-      padding: .55rem 1.6rem;
-      border: 1px solid rgba(0,0,0,.5);
-      font-family: inherit;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: #10151a;
-      background: linear-gradient(180deg, #eef3f8, #b3bdc9 70%, #8e98a4);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 3px 9px rgba(0,0,0,.45);
-      cursor: pointer;
-    }
-
-    .toggle .tab:first-child { border-radius: 999px 0 0 999px; }
-
-    .toggle .tab:last-child {
-      border-left: none;
-      border-radius: 0 999px 999px 0;
-      color: #2a1305;
-      background: linear-gradient(180deg, #ffd9a8, #d68c3c 70%, #a55f1c);
-    }
-
-    .toggle .tab[aria-selected="true"] {
-      box-shadow: inset 0 2px 7px rgba(0,0,0,.5);
-      filter: brightness(.92) saturate(1.1);
-    }
-
-    .toggle { display: none; }
     body { overflow-x: hidden; overflow-y: auto; }
 
     .stage {
@@ -596,7 +536,7 @@
 
     .content { max-width: none; margin-block: 0; }
     .her .content { margin-left: 0; text-align: left; }
-    h1 { font-size: clamp(1.5rem, 6.4vw, 2.1rem); }
+    h2 { font-size: clamp(1.5rem, 6.4vw, 2.1rem); }
     .plate strong { font-size: 1.65rem; }
 
     /* the heat tint hugs the seam: down from the top of Her, up from the bottom of His */
@@ -711,59 +651,54 @@
   </defs>
 </svg>
 
-<nav class="toggle" aria-label="Switch sides">
-  <button type="button" class="tab" data-side="his" aria-selected="false">His</button>
-  <button type="button" class="tab" data-side="her" aria-selected="true">Her</button>
-</nav>
-
 <main class="stage">
-  <h2 class="duo" aria-label="I.O.I., iron on iron">I.O.I.</h2>
+  <h1 class="duo" aria-label="I.O.I., iron on iron">I.O.I.</h1>
 
   <section class="side his" aria-labelledby="his-title">
     <svg class="wear" aria-hidden="true" preserveAspectRatio="none"><g class="wear-body"></g></svg>
     <div class="haz" aria-hidden="true"></div>
     <div class="content">
-      <h1 id="his-title">His Games</h1>
+      <h2 id="his-title">His Games</h2>
       <p class="sub">Cold-rolled, riveted, ready to fire.</p>
 
       <div class="games">
         <a class="plate" href="his-shoot-the-shit/">
-          <img class="thumb" src="his-shoot-the-shit/card.webp" alt="A shell blast tearing through a brick tower with drones inside" width="800" height="450">
+          <img class="thumb" src="his-shoot-the-shit/card.webp" alt="" width="800" height="450">
           <strong>Shoot The Shit</strong>
           <span>24 levels, four sectors. Siege, Demolition and a tower Workshop.</span>
           <span class="size">90 MB &middot; give it a moment to load</span>
         </a>
 
         <a class="plate" href="https://13-1v1.github.io/BEZ-Works/#nowhere-to-hide" rel="noopener">
-          <img class="thumb" src="his-covers/nowhere-to-hide.webp" alt="Title screen of Nowhere to Hide over a cratered little planet" width="800" height="450" loading="lazy">
+          <img class="thumb" src="his-covers/nowhere-to-hide.webp" alt="" width="800" height="450" loading="lazy">
           <strong>Nowhere to Hide</strong>
           <span>Extraction FPS on a tiny planet. Grab loot, reach the beacon before the hunters close in.</span>
           <span class="size">Windows &middot; Mac &middot; opens BEZ Works</span>
         </a>
 
         <a class="plate" href="https://13-1v1.github.io/BEZ-Works/#till-the-moon-bleeds" rel="noopener">
-          <img class="thumb" src="his-covers/till-the-moon-bleeds.webp" alt="Title screen of Till the Moon Bleeds with a lit cabin in a dark forest" width="800" height="450" loading="lazy">
+          <img class="thumb" src="his-covers/till-the-moon-bleeds.webp" alt="" width="800" height="450" loading="lazy">
           <strong>Till the Moon Bleeds</strong>
           <span>Open-world voxel survival. Build, craft, and outlast a blood-moon horde every 7th night.</span>
           <span class="size">Windows &middot; opens BEZ Works</span>
         </a>
 
         <a class="plate" href="https://13-1v1.github.io/BEZ-Works/#deadzone-arcade" rel="noopener">
-          <img class="thumb" src="his-covers/deadzone-arcade.webp" alt="Deadzone Arcade logo in orange pixel lettering on black" width="800" height="450" loading="lazy">
+          <img class="thumb" src="his-covers/deadzone-arcade.webp" alt="" width="800" height="450" loading="lazy">
           <strong>Deadzone Arcade</strong>
           <span>Top-down zombie horde shooter. Four objective types and a boss every fifth round.</span>
           <span class="size">Windows &middot; Mac &middot; opens BEZ Works</span>
         </a>
 
         <a class="plate" href="https://13-1v1.github.io/BEZ-Works/play/ibtw/" rel="noopener">
-          <img class="thumb" src="his-covers/ibtw.webp" alt="Two squads of pixel soldiers on rolling forest hills in I Blame The Wind" width="800" height="450" loading="lazy">
+          <img class="thumb" src="his-covers/ibtw.webp" alt="" width="800" height="450" loading="lazy">
           <strong>I Blame The Wind</strong>
           <span>Worms-style artillery for two on one screen. The wind bends every shot.</span>
           <span class="size">Plays in your browser &middot; opens BEZ Works</span>
         </a>
 
         <a class="plate" href="https://13-1v1.github.io/BEZ-Works/play/best/" rel="noopener">
-          <img class="thumb" src="his-covers/best.webp" alt="Flight briefing screen from B.E.S.T. showing the player ship and enemy ships" width="800" height="450" loading="lazy">
+          <img class="thumb" src="his-covers/best.webp" alt="" width="800" height="450" loading="lazy">
           <strong>B.E.S.T. Scrolling Shooter</strong>
           <span>Cyberpunk scrolling shooter. 25 stages, 3D bosses, nine weapons that evolve.</span>
           <span class="size">Plays in your browser &middot; opens BEZ Works</span>
@@ -776,7 +711,7 @@
     <svg class="wear" aria-hidden="true" preserveAspectRatio="none"><g class="wear-body"></g></svg>
     <div class="haz" aria-hidden="true"></div>
     <div class="content">
-      <h1 id="her-title">Her Games</h1>
+      <h2 id="her-title">Her Games</h2>
       <p class="sub">Cast, polished, still cooling.</p>
 
       <div class="games">
@@ -928,12 +863,6 @@
 
       <svg class="torch" viewBox="0 0 220 260" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="smawGrip" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0"   stop-color="#0c0e11"/>
-            <stop offset=".3"  stop-color="#3a424b"/>
-            <stop offset=".55" stop-color="#1c2127"/>
-            <stop offset="1"   stop-color="#07090b"/>
-          </linearGradient>
           <linearGradient id="smawGripV" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0"   stop-color="#0c0e11"/>
             <stop offset=".3"  stop-color="#3a424b"/>
@@ -1348,27 +1277,6 @@
       }
     }
 
-    /* ---- phone: one side at a time ---- */
-    var tabs = document.querySelectorAll('.toggle .tab');
-    var sides = document.querySelectorAll('.side');
-
-    function show(side) {
-      for (var i = 0; i < sides.length; i++) {
-        sides[i].classList.toggle('is-active', sides[i].classList.contains(side));
-      }
-      for (var j = 0; j < tabs.length; j++) {
-        tabs[j].setAttribute('aria-selected', String(tabs[j].dataset.side === side));
-      }
-      buildWear(document.querySelector('.side.' + side) || sides[0]);
-    }
-
-    for (var k = 0; k < tabs.length; k++) {
-      (function (tab) {
-        tab.addEventListener('click', function () { show(tab.dataset.side); });
-      })(tabs[k]);
-    }
-
-    show('her');
   })();
 
   /* ---------- arc effects: hanging cable, 3D torch pose, real sparks ---------- */
